@@ -19,7 +19,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
-    if (selectedDates[0] > new Date()) {
+    if (selectedDates[0] < new Date()) {
       window.alert('Please choose a date in the future');
       refs.btnStart.disabled = true;
     } else {
@@ -29,27 +29,26 @@ const options = {
 };
 
 flatpickr('#datetime-picker', options);
+let interval = null;
 
 function onClick() {
-  let interval = setInterval(getRestTime, 1000);
+  interval = setInterval(getRestTime, 1000);
 
   refs.btnStart.disabled = true;
-  //   const currentTime = new Date();
-  //   const selectedDate = new Date(refs.input.value);
-  //   const counter = currentTime - selectedDate;
-  //     console.log(counter);
-
-  //   interval = setInterval();
 }
 function getRestTime() {
   const currentTime = new Date();
   const selectedDate = new Date(refs.input.value);
-  const counter = currentTime - selectedDate;
-  console.log(counter);
+  const counter = selectedDate - currentTime;
 
   if (counter >= 0) {
     let counterData = convertMs(counter);
+
     refs.counterDays.textContent = counterData.days;
+    refs.counterHours.textContent = counterData.hours;
+    refs.counterMin.textContent = counterData.minutes;
+    refs.counterSec.textContent = counterData.seconds;
+    console.log(counter);
   }
 }
 

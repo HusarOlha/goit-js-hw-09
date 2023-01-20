@@ -10,7 +10,6 @@ let interval = null;
 
 function getRandomColor() {
   const color = getRandomHexColor();
-  console.log(color);
   document.body.style.backgroundColor = color;
 }
 
