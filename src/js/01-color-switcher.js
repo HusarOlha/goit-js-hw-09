@@ -8,13 +8,10 @@ refs.stop.addEventListener('click', onStopBtnClick);
 
 let interval = null;
 
-function getRandomColor() {
-  const color = getRandomHexColor();
-  document.body.style.backgroundColor = color;
-}
-
 function onStartBtnClick() {
-  interval = setInterval(getRandomColor(), 1000);
+  interval = setInterval(() => {
+    document.body.style.backgroundColor = getRandomHexColor();
+  }, 1000);
 
   refs.start.disabled = true;
   refs.stop.disabled = false;
