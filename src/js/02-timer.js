@@ -2,6 +2,8 @@ import flatpickr from 'flatpickr';
 
 import 'flatpickr/dist/flatpickr.min.css';
 
+import Notiflix from 'notiflix';
+
 const refs = {
   input: document.querySelector('#datetime-picker'),
   btnStart: document.querySelector('button[data-start]'),
@@ -20,7 +22,7 @@ const options = {
   onClose(selectedDates) {
     console.log(selectedDates[0]);
     if (selectedDates[0] < new Date()) {
-      window.alert('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future');
       refs.btnStart.disabled = true;
     } else {
       refs.btnStart.disabled = false;
@@ -48,8 +50,10 @@ function getRestTime() {
     refs.counterHours.textContent = counterData.hours;
     refs.counterMin.textContent = counterData.minutes;
     refs.counterSec.textContent = counterData.seconds;
-    console.log(counter);
   }
+}
+function pad(value) {
+  return String(value).padStart(2, '0');
 }
 
 function convertMs(ms) {
@@ -60,13 +64,13 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+  const days = pad(Math.floor(ms / day));
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hours = pad(Math.floor((ms % day) / hour));
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutes = pad(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
 
   return { days, hours, minutes, seconds };
 }
